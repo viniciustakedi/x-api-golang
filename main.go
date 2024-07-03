@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+	"net/http"
 	"takedi/xApi/configs"
 	"takedi/xApi/routes"
 
@@ -14,5 +16,12 @@ func main() {
 
 	routes.UserRoute(router)
 
-	router.Run(":8080")
+	router.GET("/ping", func(c *gin.Context) {
+		log.Println("Ping route accessed")
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
+
+	router.Run(":80")
 }

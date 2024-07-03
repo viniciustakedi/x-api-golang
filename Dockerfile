@@ -17,7 +17,7 @@ COPY . .
 RUN go build -o main .
 
 # Expõe a porta que sua aplicação usará
-EXPOSE 8080
+EXPOSE 80
 
 # Comando para rodar a aplicação
 CMD ["./main"]
