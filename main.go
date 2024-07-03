@@ -11,6 +11,7 @@ import (
 
 func main() {
 	router := gin.Default()
+	router.SetTrustedProxies(nil)
 
 	configs.ConnectDb()
 
