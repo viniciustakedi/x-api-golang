@@ -1,29 +1,23 @@
-# Use the official Golang image to create a build artifact.
-# This is based on Debian and sets the GOPATH to /go.
-FROM golang:1.22.4 as builder
+# Usa uma imagem base com Go
+FROM golang:1.22.4-alpine
 
-# Create and change to the app directory.
+# Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Retrieve application dependencies.
-# This allows the container build to reuse cached dependencies.
-# Copy go mod and sum files
+# Copia o go.mod e o go.sum para o diretório de trabalho
 COPY go.mod go.sum ./
+
+# Baixa as dependências Go
 RUN go mod download
 
-# Copy local code to the container image.
+# Copia o código-fonte para o diretório de trabalho
 COPY . .
 
-# Build the binary.
-# -o myapp specifies the output file name, replacing the default.
-RUN CGO_ENABLED=0 GOOS=linux go build -v -o myapp
+# Compila a aplicação Go
+RUN go build -o main .
 
-# Use the official lightweight Scratch image.
-# It's essentially a blank slate with no operating system.
-FROM scratch
+# Expõe a porta que sua aplicação usará
+EXPOSE 8080
 
-# Copy the binary to the production image from the builder stage.
-COPY --from=builder /app/myapp /myapp
-
-# Run the web service on container startup.
-CMD ["/myapp"]
+# Comando para rodar a aplicação
+CMD ["./main"]

@@ -9,9 +9,16 @@ import (
 
 func EnvMongoURI() string {
 	err := godotenv.Load()
+
 	if err != nil {
-		log.Fatal("Error to load .env file")
+		log.Println("No .env file found, using environment variables")
 	}
 
-	return os.Getenv("MONGO_URI")
+	mongoURI := os.Getenv("MONGO_URI")
+
+	if mongoURI == "" {
+		log.Fatal("MONGO_URI is not set")
+	}
+
+	return mongoURI
 }

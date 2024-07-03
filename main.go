@@ -14,5 +14,5 @@ func main() {
 
 	routes.UserRoute(router)
 
-	router.Run(":3000")
+	router.Run(":8080")
 }
