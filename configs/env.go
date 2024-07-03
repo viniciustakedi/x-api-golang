@@ -22,3 +22,19 @@ func EnvMongoURI() string {
 
 	return mongoURI
 }
+
+func EnvPort() string {
+	err := godotenv.Load()
+
+	if err != nil {
+		log.Println("No .env file found, using environment variables")
+	}
+
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("PORT is not set")
+	}
+
+	return port
+}

@@ -24,5 +24,13 @@ func main() {
 		})
 	})
 
-	router.Run(":80")
+	port := configs.EnvPort()
+
+	if port == "" {
+		port = "80"
+	}
+
+	log.Printf("Starting server on port %s\n", port)
+
+	router.Run(":" + port)
 }
