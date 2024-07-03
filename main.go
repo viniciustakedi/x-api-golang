@@ -17,10 +17,10 @@ func main() {
 
 	routes.UserRoute(router)
 
-	router.GET("/ping", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		log.Println("Ping route accessed")
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+			"message": "API Working!",
 		})
 	})
 
@@ -29,8 +29,6 @@ func main() {
 	if port == "" {
 		port = "80"
 	}
-
-	log.Printf("Starting server on port %s\n", port)
 
 	router.Run(":" + port)
 }
