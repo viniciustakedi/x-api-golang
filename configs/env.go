@@ -33,7 +33,7 @@ func EnvPort() string {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		log.Fatal("PORT is not set")
+		port = "80"
 	}
 
 	return port

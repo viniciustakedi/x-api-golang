@@ -1,19 +1,20 @@
-package configs
+package database
 
 import (
 	"context"
 	"fmt"
 	"log"
+	"takedi/xApi/configs"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ConnectDb() *mongo.Client {
+func Connect() *mongo.Client {
 	client, err := mongo.Connect(
 		context.TODO(),
-		options.Client().ApplyURI(EnvMongoURI()),
+		options.Client().ApplyURI(configs.EnvMongoURI()),
 	)
 
 	if err != nil {
@@ -32,7 +33,7 @@ func ConnectDb() *mongo.Client {
 	return client
 }
 
-var DB *mongo.Client = ConnectDb()
+var Client *mongo.Client = Connect()
 
 func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
 	collection := client.Database("xAPI").Collection(collectionName)
